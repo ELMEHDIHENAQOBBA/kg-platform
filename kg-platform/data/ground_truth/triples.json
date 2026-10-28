@@ -1,0 +1,222 @@
+[
+ {
+  "subject": "Amina El Fassi",
+  "predicate": "FOUNDED",
+  "object": "Atlas Dynamics"
+ },
+ {
+  "subject": "Amina El Fassi",
+  "predicate": "WORKS_FOR",
+  "object": "Atlas Dynamics"
+ },
+ {
+  "subject": "Amina El Fassi",
+  "predicate": "STUDIED_AT",
+  "object": "Rabat Institute of Technology"
+ },
+ {
+  "subject": "Karim Benali",
+  "predicate": "WORKS_FOR",
+  "object": "Atlas Dynamics"
+ },
+ {
+  "subject": "Karim Benali",
+  "predicate": "STUDIED_AT",
+  "object": "Rabat Institute of Technology"
+ },
+ {
+  "subject": "Karim Benali",
+  "predicate": "COLLABORATES_WITH",
+  "object": "Marc Dubois"
+ },
+ {
+  "subject": "Omar Tazi",
+  "predicate": "WORKS_FOR",
+  "object": "Atlas Dynamics"
+ },
+ {
+  "subject": "Omar Tazi",
+  "predicate": "STUDIED_AT",
+  "object": "Rabat Institute of Technology"
+ },
+ {
+  "subject": "Sophie Laurent",
+  "predicate": "FOUNDED",
+  "object": "NovaGraph"
+ },
+ {
+  "subject": "Sophie Laurent",
+  "predicate": "WORKS_FOR",
+  "object": "NovaGraph"
+ },
+ {
+  "subject": "Marc Dubois",
+  "predicate": "WORKS_FOR",
+  "object": "NovaGraph"
+ },
+ {
+  "subject": "Youssef Idrissi",
+  "predicate": "FOUNDED",
+  "object": "Sahara Analytics"
+ },
+ {
+  "subject": "Youssef Idrissi",
+  "predicate": "WORKS_FOR",
+  "object": "Sahara Analytics"
+ },
+ {
+  "subject": "Nadia Chraibi",
+  "predicate": "WORKS_FOR",
+  "object": "Sahara Analytics"
+ },
+ {
+  "subject": "Nadia Chraibi",
+  "predicate": "STUDIED_AT",
+  "object": "Rabat Institute of Technology"
+ },
+ {
+  "subject": "Lena Fischer",
+  "predicate": "FOUNDED",
+  "object": "Lumen Robotics"
+ },
+ {
+  "subject": "Lena Fischer",
+  "predicate": "WORKS_FOR",
+  "object": "Lumen Robotics"
+ },
+ {
+  "subject": "Thomas Weber",
+  "predicate": "WORKS_FOR",
+  "object": "Cedar Capital"
+ },
+ {
+  "subject": "NovaGraph",
+  "predicate": "ACQUIRED",
+  "object": "Sahara Analytics"
+ },
+ {
+  "subject": "Atlas Dynamics",
+  "predicate": "PARTNERS_WITH",
+  "object": "Lumen Robotics"
+ },
+ {
+  "subject": "Atlas Dynamics",
+  "predicate": "PARTNERS_WITH",
+  "object": "Orion Cloud"
+ },
+ {
+  "subject": "NovaGraph",
+  "predicate": "PARTNERS_WITH",
+  "object": "Orion Cloud"
+ },
+ {
+  "subject": "Helix Bio",
+  "predicate": "PARTNERS_WITH",
+  "object": "Orion Cloud"
+ },
+ {
+  "subject": "Lumen Robotics",
+  "predicate": "COMPETES_WITH",
+  "object": "Atlas Dynamics"
+ },
+ {
+  "subject": "Cedar Capital",
+  "predicate": "INVESTED_IN",
+  "object": "Atlas Dynamics"
+ },
+ {
+  "subject": "Cedar Capital",
+  "predicate": "INVESTED_IN",
+  "object": "NovaGraph"
+ },
+ {
+  "subject": "Cedar Capital",
+  "predicate": "INVESTED_IN",
+  "object": "Lumen Robotics"
+ },
+ {
+  "subject": "Atlas Dynamics",
+  "predicate": "LOCATED_IN",
+  "object": "Casablanca"
+ },
+ {
+  "subject": "NovaGraph",
+  "predicate": "LOCATED_IN",
+  "object": "Paris"
+ },
+ {
+  "subject": "Sahara Analytics",
+  "predicate": "LOCATED_IN",
+  "object": "Rabat"
+ },
+ {
+  "subject": "Lumen Robotics",
+  "predicate": "LOCATED_IN",
+  "object": "Berlin"
+ },
+ {
+  "subject": "Cedar Capital",
+  "predicate": "LOCATED_IN",
+  "object": "London"
+ },
+ {
+  "subject": "Orion Cloud",
+  "predicate": "LOCATED_IN",
+  "object": "Amsterdam"
+ },
+ {
+  "subject": "Helix Bio",
+  "predicate": "LOCATED_IN",
+  "object": "Lyon"
+ },
+ {
+  "subject": "Rabat Institute of Technology",
+  "predicate": "LOCATED_IN",
+  "object": "Rabat"
+ },
+ {
+  "subject": "Atlas Dynamics",
+  "predicate": "DEVELOPS",
+  "object": "AtlasVision"
+ },
+ {
+  "subject": "NovaGraph",
+  "predicate": "DEVELOPS",
+  "object": "GraphPulse"
+ },
+ {
+  "subject": "Sahara Analytics",
+  "predicate": "DEVELOPS",
+  "object": "DataLens"
+ },
+ {
+  "subject": "Lumen Robotics",
+  "predicate": "DEVELOPS",
+  "object": "LumenArm"
+ },
+ {
+  "subject": "Atlas Dynamics",
+  "predicate": "USES",
+  "object": "PyTorch"
+ },
+ {
+  "subject": "Lumen Robotics",
+  "predicate": "USES",
+  "object": "PyTorch"
+ },
+ {
+  "subject": "Helix Bio",
+  "predicate": "USES",
+  "object": "PyTorch"
+ },
+ {
+  "subject": "NovaGraph",
+  "predicate": "USES",
+  "object": "Neo4j"
+ },
+ {
+  "subject": "Sahara Analytics",
+  "predicate": "USES",
+  "object": "Apache Spark"
+ }
+]

@@ -1,0 +1,7 @@
+{
+  "source": "partner-directory",
+  "companies": [
+    {"name": "Helix Bio", "summary": "Helix Bio is headquartered in Lyon. Helix Bio uses PyTorch for protein imaging. Orion Cloud partnered with Helix Bio in 2025."},
+    {"name": "Orion Cloud", "summary": "Orion Cloud partnered with Atlas Dynamics in 2024."}
+  ]
+}

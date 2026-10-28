@@ -1,0 +1,156 @@
+[
+ {
+  "id": "Q1",
+  "type": "lookup",
+  "question": "Who founded Atlas Dynamics?",
+  "expected": [
+   "Amina El Fassi"
+  ],
+  "cypher": "MATCH (p:Entity)-[:FOUNDED]->(:Entity {name:'Atlas Dynamics'}) RETURN p.name AS answer"
+ },
+ {
+  "id": "Q2",
+  "type": "lookup",
+  "question": "Where is NovaGraph headquartered?",
+  "expected": [
+   "Paris"
+  ],
+  "cypher": "MATCH (:Entity {name:'NovaGraph'})-[:LOCATED_IN]->(l:Entity) RETURN l.name AS answer"
+ },
+ {
+  "id": "Q3",
+  "type": "1-hop list",
+  "question": "Which companies has Cedar Capital invested in?",
+  "expected": [
+   "Atlas Dynamics",
+   "NovaGraph",
+   "Lumen Robotics"
+  ],
+  "cypher": "MATCH (:Entity {name:'Cedar Capital'})-[:INVESTED_IN]->(c:Entity) RETURN c.name AS answer"
+ },
+ {
+  "id": "Q4",
+  "type": "1-hop list",
+  "question": "Which companies partner with Orion Cloud?",
+  "expected": [
+   "Atlas Dynamics",
+   "NovaGraph",
+   "Helix Bio"
+  ],
+  "cypher": "MATCH (:Entity {name:'Orion Cloud'})-[:PARTNERS_WITH]-(c:Entity) RETURN DISTINCT c.name AS answer"
+ },
+ {
+  "id": "Q5",
+  "type": "multi-hop",
+  "question": "Which investors have funded companies that partner with Orion Cloud?",
+  "expected": [
+   "Cedar Capital"
+  ],
+  "cypher": "MATCH (:Entity {name:'Orion Cloud'})-[:PARTNERS_WITH]-(c:Entity)<-[:INVESTED_IN]-(i:Entity) RETURN DISTINCT i.name AS answer"
+ },
+ {
+  "id": "Q6",
+  "type": "multi-hop",
+  "question": "Who works for the company that acquired Sahara Analytics?",
+  "expected": [
+   "Sophie Laurent",
+   "Marc Dubois"
+  ],
+  "cypher": "MATCH (:Entity {name:'Sahara Analytics'})<-[:ACQUIRED]-(a:Entity)<-[:WORKS_FOR]-(p:Entity) RETURN DISTINCT p.name AS answer"
+ },
+ {
+  "id": "Q7",
+  "type": "1-hop list",
+  "question": "Which people studied at the Rabat Institute of Technology?",
+  "expected": [
+   "Amina El Fassi",
+   "Karim Benali",
+   "Omar Tazi",
+   "Nadia Chraibi"
+  ],
+  "cypher": "MATCH (p:Entity)-[:STUDIED_AT]->(:Entity {name:'Rabat Institute of Technology'}) RETURN p.name AS answer"
+ },
+ {
+  "id": "Q8",
+  "type": "multi-hop",
+  "question": "Which companies employ alumni of the Rabat Institute of Technology?",
+  "expected": [
+   "Atlas Dynamics",
+   "Sahara Analytics"
+  ],
+  "cypher": "MATCH (:Entity {name:'Rabat Institute of Technology'})<-[:STUDIED_AT]-(p:Entity)-[:WORKS_FOR]->(c:Entity) RETURN DISTINCT c.name AS answer"
+ },
+ {
+  "id": "Q9",
+  "type": "multi-hop",
+  "question": "In which cities are the companies that Cedar Capital invested in located?",
+  "expected": [
+   "Casablanca",
+   "Paris",
+   "Berlin"
+  ],
+  "cypher": "MATCH (:Entity {name:'Cedar Capital'})-[:INVESTED_IN]->(:Entity)-[:LOCATED_IN]->(l:Entity) RETURN DISTINCT l.name AS answer"
+ },
+ {
+  "id": "Q10",
+  "type": "aggregation",
+  "question": "Which technology is used by the most companies?",
+  "expected": [
+   "PyTorch"
+  ],
+  "cypher": "MATCH (t:Entity:Technology)<-[:USES]-(c:Entity) WITH t, count(DISTINCT c) AS n ORDER BY n DESC WITH collect({t:t, n:n}) AS all WITH [x IN all WHERE x.n = all[0].n | x.t.name] AS answers UNWIND answers AS answer RETURN answer"
+ },
+ {
+  "id": "Q11",
+  "type": "multi-hop",
+  "question": "Which people collaborate with someone who works for Atlas Dynamics?",
+  "expected": [
+   "Marc Dubois"
+  ],
+  "cypher": "MATCH (p:Entity)-[:COLLABORATES_WITH]-(q:Entity)-[:WORKS_FOR]->(:Entity {name:'Atlas Dynamics'}) RETURN DISTINCT p.name AS answer"
+ },
+ {
+  "id": "Q12",
+  "type": "multi-hop",
+  "question": "Which products are developed by competitors of Atlas Dynamics?",
+  "expected": [
+   "LumenArm"
+  ],
+  "cypher": "MATCH (:Entity {name:'Atlas Dynamics'})-[:COMPETES_WITH]-(c:Entity)-[:DEVELOPS]->(p:Entity) RETURN DISTINCT p.name AS answer"
+ },
+ {
+  "id": "Q13",
+  "type": "path",
+  "recall_only": true,
+  "question": "How are Karim Benali and Sophie Laurent connected?",
+  "expected": [
+   "NovaGraph"
+  ],
+  "cypher": "MATCH (a:Entity {name:'Karim Benali'}), (b:Entity {name:'Sophie Laurent'}) MATCH p = shortestPath((a)-[:{REL}*..6]-(b)) UNWIND nodes(p)[1..-1] AS n RETURN n.name AS answer"
+ },
+ {
+  "id": "Q14",
+  "type": "semantic",
+  "recall_only": true,
+  "question": "Give me an overview of the ecosystem around Atlas Dynamics.",
+  "expected": [
+   "Amina El Fassi",
+   "Cedar Capital",
+   "Orion Cloud",
+   "Casablanca",
+   "AtlasVision"
+  ],
+  "cypher": null
+ },
+ {
+  "id": "Q15",
+  "type": "semantic",
+  "recall_only": true,
+  "question": "Quelles entreprises de l'écosystème utilisent des technologies d'IA ou de graphes, et pourquoi ?",
+  "expected": [
+   "PyTorch",
+   "Neo4j"
+  ],
+  "cypher": null
+ }
+]

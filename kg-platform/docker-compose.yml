@@ -1,0 +1,117 @@
+name: kgp
+
+x-app: &app
+  build:
+    context: .
+    dockerfile: docker/Dockerfile.app
+  image: kgp-app
+  env_file: [.env]
+  environment:
+    STORAGE_BACKEND: hdfs
+    HDFS_URL: http://namenode:9870
+    HDFS_NAMENODE: namenode:9000
+    NEO4J_URI: bolt://neo4j:7687
+    OLLAMA_URL: http://ollama:11434
+  volumes:
+    - ./reports:/app/reports
+    - ./data:/app/data
+    - ./config:/app/config
+
+services:
+  # ---------- Big Data storage ----------
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: kgp-namenode
+    environment:
+      CLUSTER_NAME: kgp
+    env_file: [hadoop.env]
+    ports: ["9870:9870"]          # HDFS web UI
+    volumes: [namenode:/hadoop/dfs/name]
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: kgp-datanode
+    hostname: datanode
+    environment:
+      SERVICE_PRECONDITION: "namenode:9870"
+    env_file: [hadoop.env]
+    depends_on: [namenode]
+    volumes: [datanode:/hadoop/dfs/data]
+
+  # ---------- Graph database ----------
+  neo4j:
+    image: neo4j:5.26.0-community
+    container_name: kgp-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:-kgpassword}
+      NEO4J_PLUGINS: '["graph-data-science"]'      # GDS (downloaded at first start)
+      NEO4J_dbms_security_procedures_unrestricted: "gds.*"
+      NEO4J_dbms_security_procedures_allowlist: "gds.*"
+      NEO4J_server_memory_heap_max__size: 1G
+    ports: ["7474:7474", "7687:7687"]
+    volumes: [neo4j_data:/data, neo4j_plugins:/plugins]
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 40
+      start_period: 40s
+
+  # ---------- Optional local LLM ----------
+  ollama:
+    image: ollama/ollama:latest
+    container_name: kgp-ollama
+    profiles: ["llm-local"]
+    ports: ["11434:11434"]
+    volumes: [ollama:/root/.ollama]
+
+  # ---------- Spark ETL (run on demand) ----------
+  spark-etl:
+    image: apache/spark:3.5.1-python3
+    profiles: ["etl"]
+    user: root
+    depends_on: [namenode, datanode]
+    environment:
+      PYTHONPATH: /opt/kgp
+    volumes:
+      - ./spark:/opt/spark-jobs:ro
+      - ./kgp:/opt/kgp/kgp:ro
+    command: >
+      /opt/spark/bin/spark-submit --master local[*] --driver-memory 1g
+      /opt/spark-jobs/spark_etl.py
+      --input hdfs://namenode:9000/data/resolved
+      --output hdfs://namenode:9000/data/curated
+      --min-confidence ${MIN_CONFIDENCE:-0.5}
+
+  # ---------- Python tools: crawler, extraction, resolution, loader, evaluation ----------
+  tools:
+    <<: *app
+    profiles: ["tools"]
+    depends_on: [namenode, datanode]
+    entrypoint: []
+    command: ["python", "-m", "kgp.pipeline", "--help"]
+
+  # ---------- API (GraphRAG + analytics) and UI ----------
+  api:
+    <<: *app
+    container_name: kgp-api
+    command: ["uvicorn", "kgp.api:app", "--host", "0.0.0.0", "--port", "8000"]
+    ports: ["8000:8000"]
+    depends_on:
+      neo4j: {condition: service_healthy}
+
+  ui:
+    <<: *app
+    container_name: kgp-ui
+    command: ["streamlit", "run", "ui/app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+    environment:
+      API_URL: http://api:8000
+    ports: ["8501:8501"]
+    depends_on: [api]
+
+volumes:
+  namenode:
+  datanode:
+  neo4j_data:
+  neo4j_plugins:
+  ollama:

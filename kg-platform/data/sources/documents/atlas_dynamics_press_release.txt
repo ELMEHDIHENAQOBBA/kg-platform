@@ -1,0 +1,7 @@
+Atlas Dynamics Announces Seed Extension
+
+Atlas Dynamics is headquartered in Casablanca and builds computer vision software for industrial inspection. Amina El Fassi founded Atlas Dynamics in 2018 after several years of research. Today Amina El Fassi is the CEO of Atlas Dynamics, and Karim Benali is the CTO of Atlas Dynamics.
+
+Atlas Dynamics develops AtlasVision, a platform that detects defects on production lines. Atlas Dynamics uses PyTorch for model training. Cedar Capital invested in Atlas Dynamics during the latest funding round, led by Thomas Weber.
+
+"We are building the future of visual inspection," said El Fassi.

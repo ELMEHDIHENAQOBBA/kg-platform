@@ -1,0 +1,37 @@
+# Heterogeneous data sources collected by the crawler (step 1).
+# Only collect lawful, authorised sources. Respect robots.txt and site terms.
+sources:
+  - type: filesystem          # PDF / Word / HTML / TXT / JSON files
+    label: file-system
+    path: data/sources/documents
+  - type: filesystem          # e-mails (.eml)
+    label: emails
+    path: data/sources/emails
+  - type: filesystem          # JSON exported from an API
+    label: api-export
+    path: data/sources/api
+  - type: database            # relational database (SQLite demo; adapt for Postgres/MySQL)
+    dsn: sqlite:///data/sources/db/crm.sqlite
+    queries:
+      - name: education
+        sql: SELECT person, school FROM education
+        template: "{person} studied at {school}."
+      - name: employment
+        sql: SELECT person, company FROM employment
+        template: "{person} works for {company}."
+      - name: partnerships
+        sql: SELECT org_a, org_b FROM partnerships
+        template: "{org_a} partnered with {org_b}."
+      - name: locations
+        sql: SELECT org, city FROM locations
+        template: "{org} is located in {city}."
+  - type: web                 # websites (disabled by default - enable and set your own URLs)
+    enabled: false
+    urls: ["https://example.org/"]
+    depth: 0
+    max_pages: 5
+    delay_s: 1.0
+  - type: api                 # live REST API (disabled by default)
+    enabled: false
+    name: example-api
+    url: https://api.example.org/companies
